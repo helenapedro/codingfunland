@@ -111,16 +111,16 @@ def color_picker_layout():
     return html.Div(
         style={'textAlign': 'center', 'fontFamily': 'Arial', 'padding': '50px'},
         children=[
-            html.H1("Selecione uma Cor 🎨", style={'marginBottom': '30px'}),
+            html.H1("Pick a Color 🎨", style={'marginBottom': '30px'}),
             dcc.Dropdown(
                 id='color-picker',
                 options=[
-                    {'label': 'Vermelho', 'value': 'red'},
-                    {'label': 'Verde', 'value': 'green'},
-                    {'label': 'Azul', 'value': 'blue'},
-                    {'label': 'Roxo', 'value': 'purple'},
-                    {'label': 'Laranja', 'value': 'orange'},
-                    {'label': 'Amarelo', 'value': 'yellow'},
+                    {'label': 'Red', 'value': 'red'},
+                    {'label': 'Green', 'value': 'green'},
+                    {'label': 'Blue', 'value': 'blue'},
+                    {'label': 'Purple', 'value': 'purple'},
+                    {'label': 'Orange', 'value': 'orange'},
+                    {'label': 'Yellow', 'value': 'yellow'},
                 ],
                 value='red',
                 style={'width': '50%', 'margin': '0 auto', 'padding': '10px'}
