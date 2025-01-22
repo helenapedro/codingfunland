@@ -1,58 +1,11 @@
 import dash
 from dash import dcc, html, Input, Output
-import random
+from mood_generator.mood import MOODS, get_mood_data  # Import the mood logic
+from color_picker.colors import get_color_data  # Import the color logic
 
 # Initialize the app
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 server = app.server  # Required for deployment
-
-# Mood data
-MOODS = {
-    "Happy": {
-        "color": "#FFD700",
-        "emoji": "😄",
-        "quotes": [
-            "Happiness is not something ready-made. It comes from your actions.",
-            "Be so happy that when others look at you, they become happy too.",
-            "Happiness is a warm puppy.",
-        ],
-    },
-    "Sad": {
-        "color": "#708090",
-        "emoji": "😢",
-        "quotes": [
-            "Tears come from the heart and not from the brain.",
-            "Sadness flies away on the wings of time.",
-            "Sometimes, it's okay not to be okay.",
-        ],
-    },
-    "Excited": {
-        "color": "#FF4500",
-        "emoji": "🤩",
-        "quotes": [
-            "Excitement is the spark that ignites greatness.",
-            "Do more of what makes you excited!",
-            "The best way to predict the future is to create it.",
-        ],
-    },
-    "Relaxed": {
-        "color": "#87CEEB",
-        "emoji": "😌",
-        "quotes": [
-            "Relax. Breathe. Let go.",
-            "Almost everything will work again if you unplug it for a few minutes, including you.",
-            "Take time to do what makes your soul happy.",
-        ],
-    },
-}
-
-# App layout
-app.layout = html.Div(
-    children=[
-        dcc.Location(id="url", refresh=False),  # Handles URL routing
-        html.Div(id="page-content"),  # Dynamic content rendered here
-    ]
-)
 
 # Home Page Layout
 def homepage_layout():
@@ -84,18 +37,20 @@ def homepage_layout():
                         ),
                         href="/mood-generator",
                     ),
-                    html.Button(
-                        "Coming Soon 🚧",
-                        style={
-                            "width": "100%",
-                            "padding": "20px",
-                            "fontSize": "18px",
-                            "backgroundColor": "#FFD700",
-                            "border": "none",
-                            "borderRadius": "10px",
-                            "cursor": "not-allowed",
-                        },
-                        disabled=True,
+                    dcc.Link(
+                        html.Button(
+                            "Color Picker 🎨",
+                            style={
+                                "width": "100%",
+                                "padding": "20px",
+                                "fontSize": "18px",
+                                "backgroundColor": "#FFD700",
+                                "border": "none",
+                                "borderRadius": "10px",
+                                "cursor": "pointer",
+                            },
+                        ),
+                        href="/color-picker",
                     ),
                 ],
             ),
@@ -151,11 +106,74 @@ def mood_generator_layout():
         ],
     )
 
+# Color Picker Layout
+def color_picker_layout():
+    return html.Div(
+        style={'textAlign': 'center', 'fontFamily': 'Arial', 'padding': '50px'},
+        children=[
+            html.H1("Selecione uma Cor 🎨", style={'marginBottom': '30px'}),
+            dcc.Dropdown(
+                id='color-picker',
+                options=[
+                    {'label': 'Vermelho', 'value': 'red'},
+                    {'label': 'Verde', 'value': 'green'},
+                    {'label': 'Azul', 'value': 'blue'},
+                    {'label': 'Roxo', 'value': 'purple'},
+                    {'label': 'Laranja', 'value': 'orange'},
+                    {'label': 'Amarelo', 'value': 'yellow'},
+                ],
+                value='red',
+                style={'width': '50%', 'margin': '0 auto', 'padding': '10px'}
+            ),
+            html.Div(
+                id='color-display',
+                style={
+                    'marginTop': '50px',
+                    'height': '200px',
+                    'borderRadius': '10px',
+                    'display': 'flex',
+                    'justifyContent': 'center',
+                    'alignItems': 'center',
+                    'color': 'white',
+                    'fontSize': '20px',
+                    'fontWeight': 'bold',
+                    'boxShadow': '0 4px 8px rgba(0, 0, 0, 0.2)',
+                },
+            ),
+            dcc.Link(
+                html.Button(
+                    "Back to Home 🏠",
+                    style={
+                        "marginTop": "30px",
+                        "padding": "10px 20px",
+                        "fontSize": "18px",
+                        "backgroundColor": "#FF6347",
+                        "color": "white",
+                        "border": "none",
+                        "borderRadius": "10px",
+                        "cursor": "pointer",
+                    },
+                ),
+                href="/",
+            ),
+        ],
+    )
+
+# Main App Layout
+app.layout = html.Div(
+    children=[
+        dcc.Location(id="url", refresh=False),
+        html.Div(id="page-content"),
+    ]
+)
+
 # Update page-content based on URL
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
     if pathname == "/mood-generator":
         return mood_generator_layout()
+    elif pathname == "/color-picker":
+        return color_picker_layout()
     return homepage_layout()
 
 # Mood Generator Callbacks
@@ -164,11 +182,10 @@ def display_page(pathname):
     [Input("mood-picker", "value")],
 )
 def update_mood(mood):
-    mood_data = MOODS[mood]
-    random_quote = random.choice(mood_data["quotes"])
+    color, emoji, quote = get_mood_data(mood)
     return (
         {
-            "backgroundColor": mood_data["color"],
+            "backgroundColor": color,
             "marginTop": "50px",
             "height": "200px",
             "borderRadius": "10px",
@@ -181,9 +198,17 @@ def update_mood(mood):
             "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.2)",
             "transition": "background-color 1s ease",
         },
-        mood_data["emoji"],
-        f'"{random_quote}"',
+        emoji,
+        quote,
     )
+
+# Color Picker Callbacks
+@app.callback(
+    Output('color-display', 'style'),
+    [Input('color-picker', 'value')]
+)
+def update_background(selected_color):
+    return get_color_data(selected_color)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
