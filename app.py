@@ -99,7 +99,7 @@ def homepage_layout():
                                 "width": "100%", 
                                 "padding": "20px", 
                                 "fontSize": "18px", 
-                                "backgroundColor": "#32CD32", 
+                                "backgroundColor": "#f97fe7 ", 
                                 "border": "none", 
                                 "borderRadius": "10px", 
                                 "cursor": "pointer"
