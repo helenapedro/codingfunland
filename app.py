@@ -4,6 +4,7 @@ from apps.mood_generator.mood import get_mood_data, mood_generator_layout
 from apps.color_picker.colors import get_color_data, color_data_layout
 from apps.shape_drawing import shape_drawing_layout, register_shape_callbacks
 from apps.simple_calculator import calculator_layout, register_calculator_callbacks
+from apps.story_generator import  story_generator_layout, register_callbacks
 
 # Initialize the app
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
@@ -11,6 +12,7 @@ server = app.server
 
 register_calculator_callbacks(app)
 register_shape_callbacks(app)
+register_callbacks(app)
 
 # Home Page Layout
 def homepage_layout():
@@ -89,6 +91,22 @@ def homepage_layout():
                         ),
                         href="/shape-drawing",
                     ),
+                    
+                    dcc.Link(
+                        html.Button(
+                            "Story Generator 📚",
+                            style={
+                                "width": "100%", 
+                                "padding": "20px", 
+                                "fontSize": "18px", 
+                                "backgroundColor": "#32CD32", 
+                                "border": "none", 
+                                "borderRadius": "10px", 
+                                "cursor": "pointer"
+                            },
+                        ),
+                        href="/story-generator",
+                    ),
                 ],
             ),
             html.Footer(
@@ -122,6 +140,8 @@ def display_page(pathname):
         return calculator_layout()
     elif pathname == "/shape-drawing":
         return shape_drawing_layout()
+    elif pathname == "/story-generator":
+        return story_generator_layout()
     return homepage_layout()
 
 # Mood Generator Callbacks
