@@ -1,12 +1,14 @@
 import dash
 from dash import dcc, html, Input, Output
 from apps.mood_generator.mood import get_mood_data, mood_generator_layout
-from apps.color_picker.colors import get_color_data
-from apps.simple_calculator import calculator_layout 
+from apps.color_picker.colors import get_color_data, color_data_layout
+from apps.simple_calculator import calculator_layout, register_calculator_callbacks
 
 # Initialize the app
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 server = app.server
+
+register_calculator_callbacks(app)
 
 # Home Page Layout
 def homepage_layout():
@@ -75,60 +77,6 @@ def homepage_layout():
     )
     
     
-# Color Picker Layout
-def color_picker_layout():
-    return html.Div(
-        style={'textAlign': 'center', 'fontFamily': 'Arial', 'padding': '50px'},
-        children=[
-            html.H1("Pick a Color 🎨", style={'marginBottom': '30px'}),
-            dcc.Dropdown(
-                id='color-picker',
-                options=[
-                    {'label': 'Red', 'value': 'red'},
-                    {'label': 'Green', 'value': 'green'},
-                    {'label': 'Blue', 'value': 'blue'},
-                    {'label': 'Purple', 'value': 'purple'},
-                    {'label': 'Orange', 'value': 'orange'},
-                    {'label': 'Yellow', 'value': 'yellow'},
-                ],
-                value='red',
-                style={'width': '50%', 'margin': '0 auto', 'padding': '10px'}
-            ),
-            html.Div(
-                id='color-display',
-                style={
-                    'marginTop': '50px',
-                    'height': '200px',
-                    'borderRadius': '10px',
-                    'display': 'flex',
-                    'justifyContent': 'center',
-                    'alignItems': 'center',
-                    'color': 'white',
-                    'fontSize': '20px',
-                    'fontWeight': 'bold',
-                    'boxShadow': '0 4px 8px rgba(0, 0, 0, 0.2)',
-                },
-            ),
-            dcc.Link(
-                html.Button(
-                    "Back to Home 🏠",
-                    style={
-                        "marginTop": "30px",
-                        "padding": "10px 20px",
-                        "fontSize": "18px",
-                        "backgroundColor": "#FF6347",
-                        "color": "white",
-                        "border": "none",
-                        "borderRadius": "10px",
-                        "cursor": "pointer",
-                    },
-                ),
-                href="/",
-            ),
-        ],
-    )
-    
-
 # Main App Layout
 app.layout = html.Div(
     children=[
@@ -143,7 +91,7 @@ def display_page(pathname):
     if pathname == "/mood-generator":
         return mood_generator_layout()
     elif pathname == "/color-picker":
-        return color_picker_layout()
+        return color_data_layout(app)
     elif pathname == "/simple-calculator":
         return calculator_layout()
     return homepage_layout()
