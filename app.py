@@ -19,8 +19,8 @@ def homepage_layout():
         children=[
             html.H1("🌟 Welcome to the Coding Fun Land! 🖥", style={"color": "#FF6347", "fontSize": "48px"}),
             html.P(
-                "Hi there! My name is Helena, and I’ll be your guide into the magical world of coding. "
-                "We’ll create fun apps, learn cool things, and play with technology like never before. 🚀",
+                "Hi there! My name is Helena, and I guide many kids into the magical world of coding. "
+                "We create fun apps, learn cool things, and play with technology like never before. 🚀",
                 style={"color": "#333", "fontSize": "20px", "marginBottom": "30px"},
             ),
             html.H2("🕹 Explore Our Fun Apps!", style={"color": "#4682B4", "marginBottom": "20px"}),
@@ -91,10 +91,18 @@ def homepage_layout():
                     ),
                 ],
             ),
+            html.Footer(
+                children=[
+                    html.P("Connect with me on LinkedIn:"),
+                    html.A("Helena Mbeua Pedro", href="https://www.linkedin.com/in/helena-mbeua-pedro/", target="_blank"),
+                    html.P("Remember, coding is like a superpower. Use it wisely and have fun! 🦸‍♀️🦸‍♂️"),
+                    html.P("P.S. Don't forget to take breaks and eat your veggies! 🥦🥕")
+                ],
+                style={"marginTop": "50px", "fontSize": "16px", "color": "#333"}
+            )
         ],
     )
-    
-    
+
 # Main App Layout
 app.layout = html.Div(
     children=[
