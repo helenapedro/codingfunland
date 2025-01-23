@@ -1,12 +1,7 @@
-import dash
 from dash import dcc, html, Input, Output
-from apps.mood_generator.mood import get_mood_data, mood_generator_layout
+from app import app
+from apps.mood_generator.mood import MOODS, get_mood_data
 from apps.color_picker.colors import get_color_data
-from apps.simple_calculator import calculator_layout 
-
-# Initialize the app
-app = dash.Dash(__name__, suppress_callback_exceptions=True)
-server = app.server
 
 # Home Page Layout
 def homepage_layout():
@@ -15,8 +10,8 @@ def homepage_layout():
         children=[
             html.H1("🌟 Welcome to the Coding Fun Land! 🖥", style={"color": "#FF6347", "fontSize": "48px"}),
             html.P(
-                "Hi there! My name is Helena, and I’ll be your guide into the magical world of coding. "
-                "We’ll create fun apps, learn cool things, and play with technology like never before. 🚀",
+                "Hi there! My name is Helena, and I guide many kids into the magical world of coding. "
+                "We create fun apps, learn cool things, and play with technology like never before. 🚀",
                 style={"color": "#333", "fontSize": "20px", "marginBottom": "30px"},
             ),
             html.H2("🕹 Explore Our Fun Apps!", style={"color": "#4682B4", "marginBottom": "20px"}),
@@ -53,28 +48,60 @@ def homepage_layout():
                         ),
                         href="/color-picker",
                     ),
-                    
-                    dcc.Link(
-                        html.Button(
-                            "Simple Calculator 🧮",
-                            style={
-                                "width": "100%",
-                                "padding": "20px",
-                                "fontSize": "18px",
-                                "backgroundColor": "#FF4500",
-                                "border": "none",
-                                "borderRadius": "10px",
-                                "cursor": "pointer",
-                            },
-                        ),
-                        href="/simple-calculator",
-                    ),
                 ],
             ),
         ],
     )
-    
-    
+
+# Mood Generator Layout
+def mood_generator_layout():
+    return html.Div(
+        style={"padding": "20px"},
+        children=[
+            html.H1("🎭 Mood Generator", style={"color": "#4682B4"}),
+            dcc.Dropdown(
+                id="mood-picker",
+                options=[{"label": mood, "value": mood} for mood in MOODS.keys()],
+                value="Happy",
+                style={"width": "50%", "margin": "0 auto", "padding": "10px"},
+            ),
+            html.Div(id="mood-emoji", style={"fontSize": "80px", "marginTop": "20px"}),
+            html.Div(id="mood-quote", style={"marginTop": "30px", "fontSize": "24px", "fontStyle": "italic"}),
+            html.Div(
+                id="mood-display",
+                style={
+                    "marginTop": "50px",
+                    "height": "200px",
+                    "borderRadius": "10px",
+                    "display": "flex",
+                    "justifyContent": "center",
+                    "alignItems": "center",
+                    "color": "white",
+                    "fontSize": "20px",
+                    "fontWeight": "bold",
+                    "boxShadow": "0 4px 8px rgba(0, 0, 0, 0.2)",
+                    "transition": "background-color 1s ease",
+                },
+            ),
+            dcc.Link(
+                html.Button(
+                    "Back to Home 🏠",
+                    style={
+                        "marginTop": "30px",
+                        "padding": "10px 20px",
+                        "fontSize": "18px",
+                        "backgroundColor": "#FF6347",
+                        "color": "white",
+                        "border": "none",
+                        "borderRadius": "10px",
+                        "cursor": "pointer",
+                    },
+                ),
+                href="/",
+            ),
+        ],
+    )
+
 # Color Picker Layout
 def color_picker_layout():
     return html.Div(
@@ -127,7 +154,6 @@ def color_picker_layout():
             ),
         ],
     )
-    
 
 # Main App Layout
 app.layout = html.Div(
@@ -144,8 +170,6 @@ def display_page(pathname):
         return mood_generator_layout()
     elif pathname == "/color-picker":
         return color_picker_layout()
-    elif pathname == "/simple-calculator":
-        return calculator_layout()
     return homepage_layout()
 
 # Mood Generator Callbacks
@@ -179,10 +203,5 @@ def update_mood(mood):
     Output('color-display', 'style'),
     [Input('color-picker', 'value')]
 )
-
 def update_background(selected_color):
     return get_color_data(selected_color)
-
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
