@@ -7,7 +7,7 @@ from apps.simple_calculator import calculator_layout, register_calculator_callba
 from apps.story_generator import  story_generator_layout, register_callbacks
 
 # Initialize the app
-app = dash.Dash(__name__, suppress_callback_exceptions=True, title="Coding Fun Land | Helena Mbeua Pedro")
+app = dash.Dash(__name__, suppress_callback_exceptions=True, title="Coding Fun Land | Helena Pedro")
 server = app.server
 
 register_calculator_callbacks(app)
@@ -34,19 +34,19 @@ def homepage_layout():
     return html.Div(className="site-shell", children=[
         html.Header(className="site-header", children=[
             dcc.Link([html.Span("HF", className="brand-mark"), html.Span("Coding Fun Land", className="brand-name")], href="/", className="brand"),
-            html.Nav([html.A("Activities", href="#activities"), html.A("Meet Helena", href="#about"), html.A("LinkedIn ↗", href="https://www.linkedin.com/in/helena-mbeua-pedro/", target="_blank", className="nav-cta")], className="nav-links"),
+            html.Nav([html.A("Activities", href="#activities"), html.A("Visit hmpedro.com ↗", href="https://hmpedro.com/", target="_blank", className="nav-cta")], className="nav-links"),
         ]),
         html.Main([
             html.Section(className="hero section-wrap", children=[
                 html.Div(className="hero-copy", children=[
-                    html.P("✦ Technology educator & creative builder", className="eyebrow"),
+                    html.P("✦ Playful technology projects for curious minds", className="eyebrow"),
                     html.H1(["Where young minds ", html.Span("learn by creating.")]),
-                    html.P("I’m Helena Mbeua Pedro. I make technology approachable through joyful, hands-on experiences that help children explore, create, and grow with confidence.", className="hero-intro"),
-                    html.Div([html.A("Explore the activities", href="#activities", className="button button-primary"), html.A("Connect with Helena", href="https://www.linkedin.com/in/helena-mbeua-pedro/", target="_blank", className="button button-secondary")], className="hero-actions"),
+                    html.P("I am Helena Pedro. This collection of hands-on activities invites children to explore technology, create freely, and build confidence through play.", className="hero-intro"),
+                    html.Div([html.A("Explore the activities", href="#activities", className="button button-primary"), html.A("Visit my website", href="https://hmpedro.com/", target="_blank", className="button button-secondary")], className="hero-actions"),
                 ]),
                 html.Div(className="hero-visual", children=[
                     html.Div("💡", className="floating-icon icon-one"), html.Div("🚀", className="floating-icon icon-two"),
-                    html.Div([html.Span("HELLO, CREATOR!", className="code-label"), html.Div("< dream >", className="code-line line-purple"), html.Div("  learn()", className="code-line line-blue"), html.Div("  build()", className="code-line line-coral"), html.Div("</ dream >", className="code-line line-purple"), html.P("Every big idea starts with curiosity.")], className="code-card"),
+                    html.Img(src="/assets/helena-pedro.png", alt="Portrait of Helena Pedro", className="hero-photo"),
                     html.Div([html.Strong("5"), html.Span("interactive activities")], className="activity-badge"),
                 ]),
             ]),
@@ -54,12 +54,8 @@ def homepage_layout():
                 html.Div([html.Div([html.P("LEARN • PLAY • CREATE", className="eyebrow"), html.H2("Choose your next adventure")]), html.P("Each activity turns an everyday idea into a small, satisfying creative win.", className="section-intro")], className="section-heading"),
                 html.Div([card(*project) for project in projects], className="project-grid"),
             ]),
-            html.Section(id="about", className="about-section", children=[html.Div(className="about-inner section-wrap", children=[
-                html.Div([html.Span("HP", className="portrait-monogram"), html.Span("✦", className="portrait-spark")], className="portrait-card"),
-                html.Div(className="about-copy", children=[html.P("MEET THE CREATOR", className="eyebrow eyebrow-light"), html.H2("Helping the next generation feel at home with technology."), html.P("Helena Mbeua Pedro is a technology educator and creative builder who believes learning works best when curiosity leads the way. Coding Fun Land brings that philosophy to life through approachable digital activities for young learners."), html.P("Her work sits at the intersection of education, technology, and playful experimentation—making complex ideas feel human, useful, and fun."), html.A("Follow Helena’s journey on LinkedIn ↗", href="https://www.linkedin.com/in/helena-mbeua-pedro/", target="_blank", className="text-link")]),
-            ])]),
         ]),
-        html.Footer(className="site-footer section-wrap", children=[html.Div([html.Span("HF", className="brand-mark small"), html.Span("Coding Fun Land")], className="footer-brand"), html.P("© 2026 Helena Mbeua Pedro. Built with curiosity.")]),
+        html.Footer(className="site-footer section-wrap", children=[html.Div([html.Span("HF", className="brand-mark small"), html.Span("Coding Fun Land")], className="footer-brand"), html.P("© 2026 Helena Pedro. Built with curiosity.")]),
     ])
 
 # Main App Layout
