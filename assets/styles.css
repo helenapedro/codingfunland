@@ -11,3 +11,13 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important}}
 .hero-photo{width:min(520px,96%);height:auto;aspect-ratio:1672/941;position:relative;z-index:1;display:block;object-fit:cover;object-position:center;border:8px solid white;border-radius:28px;box-shadow:24px 28px 0 var(--yellow),var(--shadow);transform:rotate(2deg)}
 @media(max-width:650px){.hero-photo{height:auto;box-shadow:14px 18px 0 var(--yellow),var(--shadow)}}
+
+/* Balanced hero alignment for the landscape portrait */
+.hero-visual{min-height:440px;align-self:center;isolation:isolate}
+.hero-visual::before{inset:5% 2%;border-radius:50%;transform:none}
+.hero-photo{width:min(540px,94%);margin:0 auto;border-width:7px;border-radius:24px;box-shadow:16px 18px 0 var(--yellow),var(--shadow);transform:none}
+.icon-one{top:6%;right:4%;transform:rotate(6deg)}
+.icon-two{bottom:7%;left:1%;transform:rotate(-6deg)}
+.activity-badge{right:1%;bottom:2%}
+@media(max-width:900px){.hero-visual{width:min(620px,100%);min-height:430px;margin:0 auto}}
+@media(max-width:650px){.hero-visual{min-height:330px}.hero-photo{width:94%;border-width:5px;border-radius:18px;box-shadow:10px 12px 0 var(--yellow),var(--shadow)}.floating-icon{width:46px;height:46px;border-radius:15px;font-size:23px}.icon-one{top:3%;right:1%}.icon-two{bottom:4%;left:0}.activity-badge{right:0;bottom:-1%}}
