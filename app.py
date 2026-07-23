@@ -7,7 +7,32 @@ from apps.simple_calculator import calculator_layout, register_calculator_callba
 from apps.story_generator import  story_generator_layout, register_callbacks
 
 # Initialize the app
-app = dash.Dash(__name__, suppress_callback_exceptions=True, title="Coding Fun Land | Helena Pedro")
+SOCIAL_META_TAGS = [
+    {"name": "description", "content": "Playful, hands-on coding activities that help young minds explore, create, and learn with confidence."},
+    {"property": "og:type", "content": "website"},
+    {"property": "og:site_name", "content": "Coding Fun Land"},
+    {"property": "og:title", "content": "Coding Fun Land | Learn by Creating"},
+    {"property": "og:description", "content": "Explore playful coding activities designed to spark curiosity, creativity, and confidence."},
+    {"property": "og:url", "content": "https://codingfunland.hmpedro.com/"},
+    {"property": "og:image", "content": "https://codingfunland.hmpedro.com/assets/helena-pedro.png"},
+    {"property": "og:image:secure_url", "content": "https://codingfunland.hmpedro.com/assets/helena-pedro.png"},
+    {"property": "og:image:type", "content": "image/png"},
+    {"property": "og:image:width", "content": "1024"},
+    {"property": "og:image:height", "content": "1537"},
+    {"property": "og:image:alt", "content": "Helena Pedro, creator of Coding Fun Land"},
+    {"name": "twitter:card", "content": "summary_large_image"},
+    {"name": "twitter:title", "content": "Coding Fun Land | Learn by Creating"},
+    {"name": "twitter:description", "content": "Explore playful coding activities designed to spark curiosity, creativity, and confidence."},
+    {"name": "twitter:image", "content": "https://codingfunland.hmpedro.com/assets/helena-pedro.png"},
+    {"name": "twitter:image:alt", "content": "Helena Pedro, creator of Coding Fun Land"},
+]
+
+app = dash.Dash(
+    __name__,
+    suppress_callback_exceptions=True,
+    title="Coding Fun Land | Helena Pedro",
+    meta_tags=SOCIAL_META_TAGS,
+)
 server = app.server
 
 register_calculator_callbacks(app)
